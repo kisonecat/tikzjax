@@ -2,7 +2,7 @@
 
 TikZJax converts `script` tags (containing TikZ code) into SVGs.
 
-See a live demo at https://tikzjax.com/
+See a live demo at http://tikzjax.com/
 
 ## Example
 
