@@ -7,7 +7,7 @@
     "start": "node ./app.js"
   },
   "author": "Jim Fowler",
-  "license": "GPL-3.0",
+  "license": "(GPL-3.0 or LPPL-1.3c)",
   "dependencies": {
     "browserfs": "^2.0.0",
     "dvi2html": "0.0.2",
