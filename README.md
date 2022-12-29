@@ -11,7 +11,7 @@ There is a live demo at https://tikzjax-demo.glitch.me/ thanks to [@christianp](
 In the `<head>` of your HTML, include 
 ```html
 <link rel="stylesheet" type="text/css" href="http://tikzjax.com/v1/fonts.css">
-<script src="http://tikzjax.com/v1/tikzjax.js"></script>
+<script src="https://tikzjax.com/v1/tikzjax.js"></script>
 ```
 Then in the `<body>`, include TikZ code such as
 ```html
