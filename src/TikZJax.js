@@ -62,7 +62,7 @@ export async function load(wasmUrl, coredumpUrl) {
 			yield Buffer.from(dvi);
 			return;
 		}
-		const machine = dvi2html(streamBuffer(), page);
+		const machine = await dvi2html(streamBuffer(), page);
 
 		return { machine, html };
 	};
