@@ -2,27 +2,27 @@ import { load } from "./TikZJax";
 
 // document.currentScript polyfill
 if (document.currentScript === undefined) {
-	var scripts = document.getElementsByTagName("script");
+	const scripts = document.getElementsByTagName("script");
 	document.currentScript = scripts[scripts.length - 1];
 }
-var url = new URL(document.currentScript.src);
+const url = new URL(document.currentScript.src);
 
 window.TikZJax = async function TikZJax(root){
 
 	// Determine where we were loaded from; we"ll use that to find a
 	// tikzwolke server that can handle our POSTing tikz code
 	// host includes the port
-	var host = url.host;
-	var urlRoot = url.protocol + "//" + host;
+	const host = url.host;
+	const urlRoot = url.protocol + "//" + host;
 
 	const tex = await load(urlRoot + "/tex.wasm", urlRoot + "/core.dump.gz");
 
 	async function process(elt){
-		var text = elt.childNodes[0].nodeValue;
+		const text = elt.childNodes[0].nodeValue;
 
-		var div = document.createElement("div");
+		const div = document.createElement("div");
 
-		let { machine, html } = await tex(text);
+		const { machine, html } = await tex(text);
 
 		div.style.display = "flex";
 		div.style.width = machine.paperwidth.toString() + "pt";
@@ -31,7 +31,7 @@ window.TikZJax = async function TikZJax(root){
 		div.style["justify-content"] = "center";
 
 		div.innerHTML = html;
-		let svg = div.getElementsByTagName("svg");
+		const svg = div.getElementsByTagName("svg");
 		svg[0].setAttribute("width", machine.paperwidth.toString() + "pt");
 		svg[0].setAttribute("height", machine.paperheight.toString() + "pt");
 		svg[0].setAttribute("viewBox", `-72 -72 ${machine.paperwidth} ${machine.paperheight}`);
@@ -39,8 +39,8 @@ window.TikZJax = async function TikZJax(root){
 		elt.parentNode.replaceChild(div, elt);
 	};
 
-	var scripts = root.getElementsByTagName("script");
-	var tikzScripts = Array.prototype.slice.call(scripts).filter(
+	const scripts = root.getElementsByTagName("script");
+	const tikzScripts = Array.prototype.slice.call(scripts).filter(
 		(e) => (e.getAttribute("type") === "text/tikz"));
 
 	tikzScripts.reduce( async (promise, element) => {
