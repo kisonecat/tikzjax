@@ -25,6 +25,23 @@ Then in the `<body>`, include TikZ code such as
 Your TikZ will be compiled into SVGs; the `<script>` element will be
 replaced with the corresponding SVG.
 
+### Running on demand
+
+By default, `<script>` elements will be replaced when the `window.onload` event
+executes. This is preventable by setting `window.TikZJaxNoAutostart = true`. You
+can then run the replace logic manually with `window.TikZJax(document)`.
+
+You can also convert TikZ code directly to html with `window.LoadTikZJax`. For
+example:
+
+```js
+const tex = await window.LoadTikZJax("path to wasm", "path to coredump");
+const { machine, html } = await tex("\begin{tikzpicture} ... \end{tikzpicture});
+```
+
+This is what `window.TikZJax` does in addition to replacing the `<script>`
+elements with `html`.
+
 ## How does this work?
 
 Using https://github.com/kisonecat/web2js the Pascal source of `tex`
