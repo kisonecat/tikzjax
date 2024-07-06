@@ -7,22 +7,20 @@ if (document.currentScript === undefined) {
 }
 const url = new URL(document.currentScript.src);
 
+// Determine where we were loaded from; we"ll use that to find a
+// tikzwolke server that can handle our POSTing tikz code
+// host includes the port
+const host = url.host;
+const urlRoot = url.protocol + "//" + host;
+
 window.TikZJax = async function TikZJax(root){
-
-	// Determine where we were loaded from; we"ll use that to find a
-	// tikzwolke server that can handle our POSTing tikz code
-	// host includes the port
-	const host = url.host;
-	const urlRoot = url.protocol + "//" + host;
-
 	const tex = await load(urlRoot + "/tex.wasm", urlRoot + "/core.dump.gz");
 
 	async function process(elt){
 		const text = elt.childNodes[0].nodeValue;
+		const { machine, html } = await tex(text);
 
 		const div = document.createElement("div");
-
-		const { machine, html } = await tex(text);
 
 		div.style.display = "flex";
 		div.style.width = machine.paperwidth.toString() + "pt";
@@ -43,7 +41,7 @@ window.TikZJax = async function TikZJax(root){
 	const tikzScripts = Array.prototype.slice.call(scripts).filter(
 		(e) => (e.getAttribute("type") === "text/tikz"));
 
-	tikzScripts.reduce( async (promise, element) => {
+	tikzScripts.reduce(async (promise, element) => {
 		await promise;
 		return process(element);
 	}, Promise.resolve());
